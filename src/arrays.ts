@@ -67,8 +67,11 @@ export function averageGrade(studentId: string): number {
  * sorted alphabetically and without repeats.
  */
 export function awaitingGrades(): string[] {
-  // TODO
-  throw new Error('not implemented');
+  const ids = enrolments.filter(enrolments => enrolments.grade === null).map(enrolments => enrolments.studentId);
+  const names = students.filter(students => ids.includes(students.id)).map(students => students.name).sort();
+  
+  return names; 
+
 }
 
 // --- A4. A family of formatters ------------------------------------------
