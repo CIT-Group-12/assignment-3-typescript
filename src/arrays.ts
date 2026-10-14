@@ -50,8 +50,14 @@ export function gradeReport(studentId: string): string {
  *     averageGrade('00128')   // 11  (12 and 10)
  */
 export function averageGrade(studentId: string): number {
-  // TODO
-  throw new Error('not implemented');
+  const grades = enrolments.filter(enrolments => enrolments.studentId === studentId && enrolments.grade !== null).map(enrolments => Number(enrolments.grade));
+  
+  if (grades.length === 0) {
+    return 0;
+  }
+
+  const total = grades.reduce((sum,enrolments) => sum + enrolments,0)
+  return total / grades.length;
 }
 
 // --- A3. Who is missing a grade ------------------------------------------
