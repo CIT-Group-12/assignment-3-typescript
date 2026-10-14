@@ -101,6 +101,10 @@ export function formatterFor(style: 'short' | 'long'): (student: Student) => str
  * at all: build new objects with the three dots.
  */
 export function raiseCredits(list: Student[], deptName: string, extra: number): Student[] {
-  // TODO
-  throw new Error('not implemented');
+  return list.map(student => {
+    if (student.deptName === deptName) {
+      return { ...student, totCred: student.totCred + extra };
+    }
+    return student;
+  });
 }
