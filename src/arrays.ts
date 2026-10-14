@@ -23,8 +23,18 @@ import { Student, Enrolment, students, courses, enrolments } from './data.js';
  * join. No for loops in this file.
  */
 export function gradeReport(studentId: string): string {
-  // TODO
-  throw new Error('not implemented');
+  const enrolledCourses = enrolments.filter(enrolments => enrolments.studentId === studentId)
+
+  const courseString = enrolledCourses.map(
+    enrolments => {const course = courses.find(courses => courses.courseId === enrolments.courseId)
+      if (course === undefined) {
+        return `${enrolments.courseId} Unknown course: ${enrolments.grade ?? "not awarded"}`
+      }
+      return `${enrolments.courseId} ${course.title}: ${enrolments.grade ?? "not awarded"}`
+    }
+  );
+
+  return courseString.join('\n')
 }
 
 // --- A2. Averaging --------------------------------------------------------
