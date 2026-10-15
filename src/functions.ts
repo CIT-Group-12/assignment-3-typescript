@@ -17,9 +17,9 @@ export type Test = (student: Student) => boolean;
  *
  * One line is enough, once you see what has to be returned.
  */
+// Inverts a test: true becomes false and false becomes true.
 export function not(test: Test): Test {
-  // TODO
-  throw new Error('not implemented');
+  return (student: Student) => !test(student);
 }
 
 // --- B2. One pass, two answers -------------------------------------------
@@ -33,9 +33,19 @@ export function not(test: Test): Test {
  * The return type is a tuple, so the two arrays cannot be mixed up, and the
  * caller can take them apart by position.
  */
+// Sorts students into two arrays: passing and failing.
 export function partition(list: Student[], test: Test): [Student[], Student[]] {
-  // TODO
-  throw new Error('not implemented');
+  return list.reduce<[Student[], Student[]]>(
+    (acc, student) => {
+      if (test(student)) {
+        acc[0].push(student);
+      } else {
+        acc[1].push(student);
+      }
+      return acc;
+    },
+    [[], []],
+  );
 }
 
 // --- B3. Do it once -------------------------------------------------------
@@ -53,9 +63,18 @@ export function partition(list: Student[], test: Test): [Student[], Student[]] {
  *
  * Be ready to say where the saved number lives after once has returned.
  */
+// Calculates once, then returns the saved result on every later call.
 export function once(calculation: () => number): () => number {
-  // TODO
-  throw new Error('not implemented');
+  let hasRun = false;
+  let result = 0;
+
+  return () => {
+    if (!hasRun) {
+      result = calculation();
+      hasRun = true;
+    }
+    return result;
+  };
 }
 
 // --- B4. All of them ------------------------------------------------------
@@ -69,9 +88,9 @@ export function once(calculation: () => number): () => number {
  * The three dots in a parameter list gather the arguments into an array.
  * With no tests at all, everything passes: there is nothing to fail.
  */
+// Student passes only if every test returns true.
 export function allOf(...tests: Test[]): Test {
-  // TODO
-  throw new Error('not implemented');
+  return (student: Student) => tests.every((test) => test(student));
 }
 
 // Two small helpers to build tests with, given to you.
